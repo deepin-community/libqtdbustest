@@ -1,0 +1,63 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+
+NULL  =
+
+include /usr/share/dpkg/pkg-info.mk
+
+PKD   = $(word 2, abspath $(dir $(MAKEFILE_LIST)))
+PKG   = $(DEB_SOURCE)
+UVER  = $(shell echo $(DEB_VERSION) | cut -d "-" -f1)
+DTYPE = +repack1
+VER  ?= $(subst $(DTYPE),,$(UVER))
+REV   = $(shell echo $(VER) | perl -ne 'print "$$1" if m/(?:git|svn|hg|bzr)(\d+)/;')
+
+export DPKG_GENSYMBOLS_CHECK_LEVEL=4
+
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+DPKG_EXPORT_BUILDFLAGS = 1
+include /usr/share/dpkg/buildflags.mk
+
+ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS)))
+RUN_TESTS=yes
+endif
+
+# hide system's DBus interfaces from this build...
+undefine DBUS_SESSION_BUS_ADDRESS
+undefine DBUS_SYSTEM_BUS_ADDRESS
+
+%:
+	dh $@
+
+override_dh_missing:
+	dh_missing --fail-missing
+
+override_dh_installchangelogs:
+	dh_installchangelogs ChangeLog.bzr
+
+override_dh_auto_test:
+	if [ "$(RUN_TESTS)" = "yes" ]; then dh_auto_test --no-parallel -- ARGS='-V'; fi
+
+## http://wiki.debian.org/onlyjob/get-orig-source
+.PHONY: get-orig-source
+get-orig-source: $(PKG)_$(VER)$(DTYPE).orig.tar.xz $(info I: $(PKG)_$(VER)$(DTYPE))
+	@
+
+## checkout from bzr (add "bzr (>= 2.6.0~bzr6520)" to Build-Depends, see #666496)
+UURL = lp:libqtdbustest
+$(PKG)_$(VER)$(DTYPE).orig.tar.xz:
+	$(if $(wildcard $(PKG)-$(VER)),$(error $(PKG)-$(VER) exist, aborting..))
+	bzr checkout --hardlink --lightweight --revision=$(REV) $(UURL) $(PKG)-$(VER) \
+	    || $(RM) -r $(PKG)-$(VER)
+	@echo "# Creating ChangeLog..."
+	cd $(PKG)-$(VER) && bzr log --log-format=line > ChangeLog.bzr
+	@echo "# Modifying..."
+	cd $(PKG)-$(VER) && rm -Rfv \
+	    .bzr-builddeb \
+	    .bzr \
+	    debian \
+	    $(NULL)
+	@echo "# Packing..."
+	find -L "$(PKG)-$(VER)" -xdev -type f -print | sort \
+	    | XZ_OPT="-6v" tar -caf "../$(PKG)_$(VER)$(DTYPE).orig.tar.xz" -T- --owner=root --group=root --mode=a+rX \
+	    && $(RM) -r "$(PKG)-$(VER)"

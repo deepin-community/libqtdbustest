@@ -1,0 +1,23 @@
+Description: Never time out, if launching test runner dbus-daemons. This may be have to be turned into long long timeouts instead...
+Author: Mike Gabriel <mike.gabriel@das-netzwerkteam.de>
+
+--- a/src/libqtdbustest/DBusTestRunner.cpp
++++ b/src/libqtdbustest/DBusTestRunner.cpp
+@@ -64,7 +64,7 @@
+ 		d->m_sessionDBus.start("dbus-daemon",
+ 				QStringList() << "--config-file" << dbusSessionConfigFile
+ 						<< "--print-address");
+-		Q_ASSERT(d->m_sessionDBus.waitForStarted());
++		Q_ASSERT(d->m_sessionDBus.waitForStarted(-1));
+ 
+ 		d->m_sessionDBus.waitForReadyRead();
+ 		d->m_sessionBus = d->m_sessionDBus.readAll().trimmed();
+@@ -82,7 +82,7 @@
+ 		d->m_systemDBus.start("dbus-daemon",
+ 				QStringList() << "--config-file" << dbusSystemConfigFile
+ 						<< "--print-address");
+-		Q_ASSERT(d->m_systemDBus.waitForStarted());
++		Q_ASSERT(d->m_systemDBus.waitForStarted(-1));
+ 
+ 		d->m_systemDBus.waitForReadyRead();
+ 		d->m_systemBus = d->m_systemDBus.readAll().trimmed();

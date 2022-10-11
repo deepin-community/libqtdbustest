@@ -1,0 +1,42 @@
+42: Bileto Bot 2017-01-06 {0.2+17.04.20170106-0ubuntu1} Releasing 0.2+17.04.20170106-0ubuntu1
+41: Pete Woods 2017-01-06 [merge] Compatibility with unversioned cmake-extras modules (LP: #1563573)
+40: CI Train Bot 2016-02-16 {0.2+16.04.20160216-0ubuntu1} Releasing 0.2+16.04.20160216-0ubuntu1
+39: Gerry Boland 2016-02-16 [merge] Increase timeout when waiting for mock dbus service to appear on the bus.
+38: CI Train Bot 2015-09-18 {0.2+15.10.20150918-0ubuntu1} Releasing 0.2+15.10.20150918-0ubuntu1
+37: Pete Woods 2015-09-18 [merge] Fix building on wily Fixes: #1451507
+36: CI Train Bot 2015-06-04 {0.2+15.10.20150604-0ubuntu1} Releasing 0.2+15.10.20150604-0ubuntu1
+35: Pete Woods 2015-06-04 [merge] Fix FTBFS on PPC Fixes: #1451507
+34: CI bot 2014-03-25 {0.2+14.04.20140325-0ubuntu1} Releasing 0.2+14.04.20140325-0ubuntu1
+33: Pete Woods 2014-03-25 [merge] Correctly handle crashing child processes Fixes: 1296744
+32: CI bot 2014-03-03 {0.2+14.04.20140303.1-0ubuntu1} Releasing 0.2+14.04.20140303.1-0ubuntu1
+31: Pete Woods 2014-03-03 [merge] Valgrind doesn't like dlopens Fixes: 1287135
+30: Ken VanDine 2014-01-08 [merge] Sync packaging changes uploaded to the archive back to trunk.
+29: Pete Woods 2014-01-02 [merge] Valgrind is not present on all architectures. Fixes: https://bugs.launchpad.net/bugs/1262638, https://bugs.launchpad.net/bugs/1263925, https://bugs.launchpad.net/bugs/1263926.
+28: Automatic PS uploader 2013-11-28 [merge] Releasing 0.2+14.04.20131128.1-0ubuntu1 (revision 27 from lp:libqtdbustest).
+27: Pete Woods 2013-11-13 [merge] Add qdbus-simple-test-runner binary
+26: Pete Woods 2013-11-12 [merge] Add environment variable to allow child process output printing
+25: Automatic PS uploader 2013-08-15 [merge] Releasing 0.1+13.10.20130815-0ubuntu1 (revision 24 from lp:libqtdbustest).
+24: Pete Woods 2013-08-15 [merge] Rename parameter to be less confusing.
+23: Automatic PS uploader 2013-08-14 [merge] Releasing 0.1+13.10.20130814-0ubuntu1 (revision 22 from lp:libqtdbustest).
+22: Pete Woods 2013-08-13 [merge] Add more tests.
+21: Automatic PS uploader 2013-08-09 [merge] Releasing 0.1+13.10.20130809-0ubuntu1 (revision 20 from lp:libqtdbustest).
+20: Robert Bruce Park 2013-08-08 [merge] Copyright cleanup.
+19: Pete Woods 2013-08-08 Enable coverage reports
+18: Pete Woods 2013-08-07 [merge] Add first test.
+17: Robert Bruce Park 2013-08-07 Packaging comment.
+16: Robert Bruce Park 2013-08-07 wrap-and-sort -a -t
+15: Robert Bruce Park 2013-08-07 Packaging fixes necessary for daily release.
+14: Pete Woods 2013-08-05 Add suicidal process as an API class
+13: Pete Woods 2013-08-05 First attempt at a watchdog
+12: Pete Woods 2013-08-05 Fix packaging
+11: Pete Woods 2013-08-05 Fix copyright
+10: Pete Woods 2013-08-05 Set up debian build files
+9: Pete Woods 2013-08-05 More complete install
+8: Pete Woods 2013-08-05 Delete everything not related to libqtdbustest
+7: Pete Woods 2013-08-02 Create a gmenumodel and confirm it is correct by reading it back in again
+6: Pete Woods 2013-08-01 Add code to construct gmenumodels
+5: Pete Woods 2013-07-29 Fix support for mocking session services
+4: Pete Woods 2013-07-29 Support the whole dbusmock interface
+3: Pete Woods 2013-07-29 Support separate mocked session and system buses
+2: Pete Woods 2013-07-29 Pull out the dbus initialisationd and mocking into separate libraries
+1: Pete Woods 2013-07-24 Initial commit

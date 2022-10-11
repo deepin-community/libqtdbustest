@@ -1,0 +1,42 @@
+Description: Explicitly launch sleep executable with full path
+Author: Mike Gabriel <mike.gabriel@das-netzwerkteam.de>
+Abstract:
+ At some point, ps output for sleep executed via QProcess started
+ returning /bin/sleep rather than sleep. We don't want to leave it
+ to third-party code to decide how to launch or return that test
+ string. If we launch sleep as /bin/sleep right away, this issue
+ gets worked around.
+
+--- a/tests/libqtdbustest/TestSuicidalProcess.cpp
++++ b/tests/libqtdbustest/TestSuicidalProcess.cpp
+@@ -18,6 +18,8 @@
+ 
+ #include <libqtdbustest/SuicidalProcess.h>
+ 
++#include <QStandardPaths>
++
+ #include <gmock/gmock.h>
+ #include <gtest/gtest.h>
+ 
+@@ -42,7 +44,8 @@
+ };
+ 
+ TEST_F(TestSuicidalProcess, BehavesLikeNormalQProcess) {
+-	process.start("sleep", QStringList() << "5");
++	QString sleep_executable = QStandardPaths::findExecutable("sleep");
++	process.start(sleep_executable, QStringList() << "5");
+ 
+ 	QProcess pgrep;
+ 	pgrep.start("ps",
+@@ -51,8 +54,9 @@
+ 	pgrep.waitForFinished();
+ 	pgrep.waitForReadyRead();
+ 
+-	EXPECT_EQ("sleep 5",
+-			QString::fromUtf8(pgrep.readAll().trimmed()).toStdString());
++	QString expected_result = sleep_executable + " 5";
++	EXPECT_EQ(expected_result.toStdString(),
++		  QString::fromUtf8(pgrep.readAll().trimmed()).toStdString());
+ }
+ 
+ } // namespace
